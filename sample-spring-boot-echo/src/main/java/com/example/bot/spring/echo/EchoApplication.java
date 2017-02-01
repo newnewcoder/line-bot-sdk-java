@@ -40,7 +40,7 @@ public class EchoApplication {
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String message = event.getMessage().getText();
 
-        if (message != null && message.trim().length() == 0 && message.toLowerCase().startsWith(MY_NAME)) {
+        if (message != null && message.trim().length() > 0 && message.toLowerCase().startsWith(MY_NAME)) {
             String replyMessage = "";
             String command = message.toLowerCase().replace(MY_NAME, "").trim();
             if ("What's room id?".equalsIgnoreCase(command)) {
