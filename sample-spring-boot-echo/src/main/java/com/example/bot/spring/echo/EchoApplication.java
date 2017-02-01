@@ -40,11 +40,11 @@ public class EchoApplication {
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String message = event.getMessage().getText();
 
-        if (message != null && message.trim() != "" && message.toLowerCase().startsWith(MY_NAME)) {
+        if (message != null && message.trim().length() == 0 && message.toLowerCase().startsWith(MY_NAME)) {
             String replyMessage = "";
             String command = message.toLowerCase().replace(MY_NAME, "").trim();
             if ("What's room id?".equalsIgnoreCase(command)) {
-                replyMessage = String.format("Room ID is: \r\n%s", event.getSource().getSenderId());
+                replyMessage = String.format("Room ID is: %n%s", event.getSource().getSenderId());
             } else {
                 replyMessage = "is this good to drink ?";
             }
