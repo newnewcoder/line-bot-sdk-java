@@ -29,14 +29,28 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 @SpringBootApplication
 @LineMessageHandler
 public class EchoApplication {
+
+    private static final String MY_NAME = "@bot";
+
     public static void main(String[] args) {
         SpringApplication.run(EchoApplication.class, args);
     }
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-        System.out.println("event: " + event);
-        return new TextMessage(event.getMessage().getText());
+        String message = event.getMessage().getText();
+
+        if (message != null && message.trim() != "" && message.toLowerCase().startsWith(MY_NAME)) {
+            String replyMessage = "";
+            String command = message.toLowerCase().replace(MY_NAME, "").trim();
+            if ("What's room id?".equalsIgnoreCase(command)) {
+                replyMessage = String.format("Room ID is: \r\n%s", event.getSource().getSenderId());
+            } else {
+                replyMessage = "is this good to drink ?";
+            }
+            return new TextMessage(replyMessage);
+        }
+        return null;
     }
 
     @EventMapping
